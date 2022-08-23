@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assets;
+use App\Models\AssetsType;
 use Illuminate\Http\Request;
 
 class AssetsController extends Controller
@@ -15,6 +16,8 @@ class AssetsController extends Controller
     public function index()
     {
         //
+        $data['assets'] = Assets::all();
+        return view("pages/manageAssets",$data);
     }
 
     /**
@@ -36,7 +39,12 @@ class AssetsController extends Controller
     public function store(Request $request)
     {
         //
+
+
     }
+
+    
+    
 
     /**
      * Display the specified resource.

@@ -15,6 +15,7 @@ class AssetsTypeController extends Controller
     public function index()
     {
         //
+        return view("pages/manageAssetType",['assetsType' => AssetsType::all()]);
     }
 
     /**
@@ -36,6 +37,16 @@ class AssetsTypeController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'assets_type_name'=>'required'
+        ]);
+
+        $at = new AssetsType();
+        $at->assets_type_name = $request->assets_type_name;
+        $at->assets_type_description = $request->assets_type_description;
+        $at->save();
+
+        return redirect()->route("assetsType.index");
     }
 
     /**
@@ -81,5 +92,7 @@ class AssetsTypeController extends Controller
     public function destroy(AssetsType $assetsType)
     {
         //
+        $assetsType->delete();
+        return redirect()->route("assetsType.index");
     }
 }
