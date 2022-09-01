@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->string('assets_name');
-            $table->uuid('assets_code')->unique();
-            $table->foreignId('assets_type_id')->constrained('assets_types');
-            $table->string('assets_image');
+            $table->string("assets_name");
+            $table->uuid("assets_code")->unique();
+            $table->foreignId("assets_type_id")->constrained();
+            $table->string("assets_image");
             $table->timestamps();
             $table->boolean('is_active')->default(true);
         });

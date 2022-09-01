@@ -27,7 +27,8 @@ class AssetsController extends Controller
      */
     public function create()
     {
-        //
+        $data['assets_type']=AssetsType::all();
+        return view("pages/insertAssets",$data);
     }
 
     /**
@@ -39,6 +40,26 @@ class AssetsController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->isMethod("post")){
+            $data=$request->validate([
+               'assets_name' => 'required',
+               'assets_code' => 'required',
+               'assets_type_id' => 'required',
+               'assets_image' => 'required|image',
+           ]);
+       
+           
+           $data=new Assets();
+           $data->assets_name=$request->assets_name;
+           $data->assets_code=$request->assets_code;
+           $data->assets_type_id=$request->assets_type_id;
+           $filename=$request->assets_image->getClientOriginalName();
+           $request->assets_image->move(public_path("asset"),$filename);
+           $data->assets_image=$filename;
+       
+           $data->save();
+           return redirect()->route("assets.index");
+       }
 
 
     }
@@ -89,5 +110,7 @@ class AssetsController extends Controller
     public function destroy(Assets $assets)
     {
         //
+        $assets->delete();
+        return redirect()->route("assets.index");
     }
 }
